@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 {
     if(argc<=1)
     {
-        cout << "Usage: " << argv[0] << "INPUT.xml" << endl;
+        cout << "Usage: " << argv[0] << " INPUT.xml" << endl;
         return EXIT_FAILURE;
     }
     cout << "Parsing OfmData..." << endl;
@@ -80,9 +80,9 @@ int main(int argc, char* argv[])
 	*/
 	
 	ofstream out;
-	out.open("Apt.dat",ios::trunc);
+	out.open("apt.dat",ios::trunc);
 	out << "I" << endl;
-    out << "1000 Version - data cycle 2013.10, build 20131335, metadata AptXP1000.  Copyright © 2013, Robin A. Peel (robin@x-plane.com).   This data is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.  You should have received a copy of the GNU General Public License along with this program (""AptNavGNULicence.txt""); if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA." << endl << endl << endl;
+    out << "1000 Version - data cycle 2015.07, build 20150729, metadata AptXP1000.  Copyright © 2015, Open flightmaps Association (info@openflightmaps.org).   This data is covered by the open flightmaps general user license, which can be found on the www.openflightmaps.org" << endl << endl << endl;
     
     cout.precision(10);
     out.precision(10);
@@ -134,9 +134,10 @@ xml_node<> * complete_Ahp(const xml_node<> *Ahp, ofstream &out)
 
     int ID=my_stoi(string(Ahp->first_node("AhpUid")->first_attribute("mid")->value()));
     out << endl << "1 ";
-    string buf(Ahp->first_node("uomElev")->value());
-    if(Ahp->first_node("valElev")!=NULL)
+
+    if(Ahp->first_node("valElev")!=NULL && Ahp->first_node("uomElev")!=NULL)
     {
+        string buf(Ahp->first_node("uomElev")->value());
         if(buf.compare("FT")==0)
             out << Ahp->first_node("valElev")->value() << " ";
         else
